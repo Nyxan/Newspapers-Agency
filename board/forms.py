@@ -10,7 +10,7 @@ class RedactorCreationForm(UserCreationForm):
         model = Redactor
         fields = UserCreationForm.Meta.fields + (
             "years_of_experience",
-            "email",
+            'email',
             "first_name",
             "last_name",
         )
@@ -19,27 +19,16 @@ class RedactorCreationForm(UserCreationForm):
 class RedactorUpdateForm(forms.ModelForm):
     class Meta:
         model = Redactor
-        fields = (
-            "first_name",
-            "last_name",
-            "email",
-            "username",
-            "years_of_experience",
-            "profile_image",
-        )
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["profile_image"].widget.attrs["class"] = "form-control-file"
+        fields = ('first_name', 'last_name','email', 'username', 'years_of_experience')
 
 
 class NewspaperForm(forms.ModelForm):
     class Meta:
         model = Newspaper
-        fields = ["title", "content", "topic", "redactor"]
+        fields = ['title', 'content', 'topic', 'redactor']
         widgets = {
-            "topic": forms.CheckboxSelectMultiple(),
-            "redactor": forms.CheckboxSelectMultiple(),
+            'topic': forms.CheckboxSelectMultiple(),
+            'redactor': forms.CheckboxSelectMultiple()
         }
 
 
@@ -73,4 +62,4 @@ class TopicSearchForm(forms.Form):
 class TopicCreateForm(forms.ModelForm):
     class Meta:
         model = Topic
-        fields = ["name"]
+        fields = ['name']

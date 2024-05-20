@@ -5,15 +5,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from board.forms import (
-    RedactorUpdateForm,
-    NewspaperForm,
-    RedactorSearchForm,
-    TopicSearchForm,
-    NewspaperSearchForm,
-    TopicCreateForm,
-    RedactorCreationForm,
-)
+from board.forms import RedactorUpdateForm, NewspaperForm, RedactorSearchForm, TopicSearchForm, NewspaperSearchForm, \
+    TopicCreateForm, RedactorCreationForm
 from board.models import Topic, Newspaper, Comment
 from accounts.models import Redactor
 
@@ -24,18 +17,18 @@ def index(request):
     num_redactors = Redactor.objects.count()
     num_topics = Topic.objects.count()
     topics = Topic.objects.all()
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
 
     context = {
-        "num_newspapers": num_newspapers,
-        "num_redactors": num_redactors,
-        "num_topics": num_topics,
-        "num_visits": num_visits,
-        "topics": topics,
+        'num_newspapers': num_newspapers,
+        'num_redactors': num_redactors,
+        'num_topics': num_topics,
+        'num_visits': num_visits,
+        'topics': topics,
     }
 
-    return render(request, "board/index.html", context)
+    return render(request, 'board/index.html', context)
 
 
 class RedactorListView(LoginRequiredMixin, generic.ListView):
@@ -60,31 +53,30 @@ class RedactorListView(LoginRequiredMixin, generic.ListView):
 
 
 class RedactorDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = "board/redactor_detail.html"
+    template_name = 'board/redactor_detail.html'
     model = Redactor
     queryset = Redactor.objects.prefetch_related("newspapers__topic")
-    paginate_by = 5
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         redactor = self.get_object()
         newspapers = redactor.newspapers.all()
         paginator = Paginator(newspapers, self.paginate_by)
-        page = self.request.GET.get("page")
+        page = self.request.GET.get('page')
         try:
             newspapers = paginator.page(page)
         except PageNotAnInteger:
             newspapers = paginator.page(1)
         except EmptyPage:
             newspapers = paginator.page(paginator.num_pages)
-        context["newspapers"] = newspapers
+        context['newspapers'] = newspapers
         return context
-
 
 class RedactorCreateView(LoginRequiredMixin, generic.CreateView):
     model = Redactor
     form_class = RedactorCreationForm
-    template_name = "board/redactor_form.html"
+    template_name = 'board/redactor_form.html'
 
 
 class RedactorUpdate(LoginRequiredMixin, generic.UpdateView):
@@ -97,15 +89,11 @@ class RedactorUpdate(LoginRequiredMixin, generic.UpdateView):
         qs = super().get_queryset()
         return qs.filter(pk=self.request.user.pk)
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
-
 
 class RedactorDelete(LoginRequiredMixin, generic.DeleteView):
     model = Redactor
     success_url = reverse_lazy("board:redactor-list")
-    template_name = "board/redactor_confirm_delete.html"
+    template_name = 'board/redactor_confirm_delete.html'
 
 
 class TopicListView(LoginRequiredMixin, generic.ListView):
@@ -129,19 +117,19 @@ class TopicListView(LoginRequiredMixin, generic.ListView):
 
 class TopicDetailView(generic.DetailView):
     model = Topic
-    template_name = "board/topic_detail.html"
-    context_object_name = "topic"
+    template_name = 'board/topic_detail.html'
+    context_object_name = 'topic'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["newspapers"] = self.object.newspapers.all()
+        context['newspapers'] = self.object.newspapers.all()
         return context
 
 
 class TopicCreateView(LoginRequiredMixin, generic.CreateView):
     model = Topic
     form_class = TopicCreateForm
-    template_name = "board/topic_form.html"
+    template_name = 'board/topic_form.html'
     success_url = reverse_lazy("board:topic-list")
 
 
@@ -153,7 +141,7 @@ class TopicUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class TopicDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Topic
-    success_url = reverse_lazy("board:topic-list")
+    success_url = reverse_lazy('board:topic-list')
 
 
 class NewspapersListView(LoginRequiredMixin, generic.ListView):
@@ -178,8 +166,8 @@ class NewspapersListView(LoginRequiredMixin, generic.ListView):
 class NewspaperCreateView(generic.CreateView):
     model = Newspaper
     form_class = NewspaperForm
-    template_name = "board/newspaper_form.html"
-    success_url = reverse_lazy("board:newspaper-list")
+    template_name = 'board/newspaper_form.html'
+    success_url = reverse_lazy('board:newspaper-list')
 
 
 class NewspaperDetailView(LoginRequiredMixin, generic.DetailView):
@@ -200,15 +188,11 @@ class NewspaperDeleteView(LoginRequiredMixin, generic.DeleteView):
 
 @login_required
 def add_comment(request, newspaper_id):
-    if request.method == "POST":
+    if request.method == 'POST':
         newspaper = Newspaper.objects.get(id=newspaper_id)
-        content = request.POST.get("content")
+        content = request.POST.get('content')
         redactor = request.user
-        Comment.objects.create(
-            newspaper=newspaper,
-            content=content,
-            redactor=redactor
-        )
-        return redirect("board:newspaper-detail", pk=newspaper_id)
+        Comment.objects.create(newspaper=newspaper, content=content, redactor=redactor)
+        return redirect('board:newspaper-detail', pk=newspaper_id)
     else:
-        return redirect("board:index")
+        return redirect('board:index')

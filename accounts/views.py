@@ -1,9 +1,4 @@
-from allauth.account.views import (
-    LoginView,
-    SignupView,
-    PasswordResetView,
-    PasswordChangeView,
-)
+from allauth.account.views import LoginView, SignupView, PasswordResetView, PasswordChangeView
 from accounts.forms import *
 
 
