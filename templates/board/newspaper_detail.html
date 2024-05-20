@@ -80,7 +80,7 @@
           </ul>
           <hr>
           <h3>Add a Comment</h3>
-          <form method="post" action="{% url 'board:add_comment' newspaper.id %}">
+          <form method="post" action="{% url 'board:add-comment' newspaper.id %}">
             {% csrf_token %}
             <div class="form-group">
               <label for="comment_content">Your Comment</label>

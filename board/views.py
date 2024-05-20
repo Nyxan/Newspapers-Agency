@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -55,7 +56,22 @@ class RedactorDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'board/redactor_detail.html'
     model = Redactor
     queryset = Redactor.objects.prefetch_related("newspapers__topic")
+    paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        redactor = self.get_object()
+        newspapers = redactor.newspapers.all()
+        paginator = Paginator(newspapers, self.paginate_by)
+        page = self.request.GET.get('page')
+        try:
+            newspapers = paginator.page(page)
+        except PageNotAnInteger:
+            newspapers = paginator.page(1)
+        except EmptyPage:
+            newspapers = paginator.page(paginator.num_pages)
+        context['newspapers'] = newspapers
+        return context
 
 class RedactorCreateView(LoginRequiredMixin, generic.CreateView):
     model = Redactor
