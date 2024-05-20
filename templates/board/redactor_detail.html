@@ -6,7 +6,11 @@
       <div class="card-header">
         <h1>Username: {{ redactor.username }}</h1>
       </div>
+      
       <div class="card-body">
+                {% if redactor.profile_image %}
+          <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid mb-3">
+        {% endif %}
         <p><strong>First name:</strong> {{ redactor.first_name }}</p>
         <p><strong>Last name:</strong> {{ redactor.last_name }}</p>
         <p><strong>Email:</strong> {{ redactor.email }}</p>
