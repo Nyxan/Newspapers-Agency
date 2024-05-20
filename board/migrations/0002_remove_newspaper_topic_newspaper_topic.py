@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("board", "0001_initial"),
     ]
@@ -17,6 +16,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="newspaper",
             name="topic",
-            field=models.ManyToManyField(related_name="newspapers", to="board.topic"),
+            field=models.ManyToManyField(
+                related_name="newspapers",
+                to="board.topic"),
         ),
     ]

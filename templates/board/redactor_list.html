@@ -1,51 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
+  <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mt-5 mb-4">Redactors</h1>
+      <h1 class="mt-5 mb-4">Redactors</h1>
+      {% if user.is_staff %}
         <a href="{% url 'board:redactor-create' %}" class="btn btn-primary">Create Redactor</a>
+      {% endif %}
     </div>
 
     {% if redactors %}
-        {% include "includes/search_form.html" %}
+      {% include "includes/search_form.html" %}
       <br>
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                      <th>Image</th>
-                        <th>Username</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Years of Experience</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for redactor in redactors %}
-                        <tr>
-                        <td>          <div class="col-md-3">
-            {% if redactor.profile_image %}
-              <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid mb-3">
-              {% else  %}
-              <div class="col-md-3">Empty image</div>
-            {% endif %}
-          </div></td>
-                            <td>
-                                <a href="{{ redactor.get_absolute_url }}">
-                                    {{ redactor.username }} {% if user == redactor %} (Me){% endif %}
-                                </a>
-                            </td>
-                            <td>{{ redactor.first_name }}</td>
-                            <td>{{ redactor.last_name }}</td>
-                            <td>{{ redactor.years_of_experience }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Image</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Years of Experience</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for redactor in redactors %}
+            <tr>
+              <td>
+                <div class="col-md-3">
+                  {% if redactor.profile_image %}
+                    <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid mb-3">
+                  {% else %}
+                    <div class="col-md-3">Empty image</div>
+                  {% endif %}
+                </div>
+              </td>
+              <td>
+                <a href="{{ redactor.get_absolute_url }}">
+                  {{ redactor.username }} {% if user == redactor %} (Me){% endif %}
+                </a>
+              </td>
+              <td>{{ redactor.first_name }}</td>
+              <td>{{ redactor.last_name }}</td>
+              <td>{{ redactor.years_of_experience }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
     {% else %}
-        <p class="mt-3">There are no redactors in the service.</p>
+      <p class="mt-3">There are no redactors in the service.</p>
     {% endif %}
-</div>
+  </div>
 {% endblock %}

@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("board", "0002_remove_newspaper_topic_newspaper_topic"),
     ]
