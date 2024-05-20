@@ -35,12 +35,12 @@ urlpatterns = [
     path("redactor/create/", RedactorCreateView.as_view(), name="redactor-create"),
     path("newspapers/", NewspapersListView.as_view(), name="newspaper-list"),
     path("newspaper/<int:pk>/", NewspaperDetailView.as_view(), name="newspaper-detail"),
-    path('newspapers/create/', NewspaperCreateView.as_view(), name='create-newspaper'),
+    path('newspapers/create/', NewspaperCreateView.as_view(), name='newspaper-create'),
     path("newspaper/<int:pk>/update/", NewspaperUpdateView.as_view(), name="newspaper-update"),
     path("newspaper/<int:pk>/delete/", NewspaperDeleteView.as_view(), name="newspaper-delete"),
     path("topics/", TopicListView.as_view(), name="topic-list"),
     path('topic/<int:pk>/', TopicDetailView.as_view(), name='topic-detail'),
-    path('topics/create/', TopicCreateView.as_view(), name='create-topic'),
+    path('topics/create/', TopicCreateView.as_view(), name='topic-create'),
     path(
         "manufacturers/<int:pk>/update/",
         TopicUpdateView.as_view(),
@@ -51,6 +51,6 @@ urlpatterns = [
         TopicDeleteView.as_view(),
         name="topic-delete",
     ),
-    path('newspaper/<int:newspaper_id>/add_comment/', add_comment, name='add_comment'),
+    path('newspaper/<int:newspaper_id>/add_comment/', add_comment, name='add-comment'),
 ]
 app_name = "board"
