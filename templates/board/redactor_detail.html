@@ -1,33 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Username: {{ driver.username }}
-    <a href="{% url 'taxi:driver-delete' pk=driver.id %}" class="btn btn-danger link-to-page">
-      Delete
-    </a>
-
-    <a href="{% url 'taxi:driver-update' pk=driver.id %}" class="btn btn-secondary link-to-page">
-      Update license number
-    </a>
-  </h1>
-
-  <p><strong>First name:</strong> {{ driver.first_name }}</p>
-  <p><strong>Last name:</strong> {{ driver.last_name }}</p>
-  <p><strong>License number:</strong> {{ driver.license_number }}</p>
-  <p><strong>Is staff:</strong> {{ driver.is_staff }}</p>
-
-  <div class="ml-3">
-    <h4>Cars</h4>
-
-    {% for car in driver.cars.all %}
-        <hr>
-        <p><strong>Model:</strong> {{ car.model }}</p>
-        <p><strong>Manufacturer:</strong> {{ car.manufacturer.name }}</p>
-        <p class="text-muted"><strong>Id:</strong> {{car.id}}</p>
-
-    {% empty %}
-      <p>No cars!</p>
-    {% endfor %}
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h1>Username: {{ redactor.username }}</h1>
+      </div>
+      <div class="card-body">
+        <p><strong>First name:</strong> {{ redactor.first_name }}</p>
+        <p><strong>Last name:</strong> {{ redactor.last_name }}</p>
+        <p><strong>Email:</strong> {{ redactor.email }}</p>
+        <p><strong>Years of experience:</strong> {{ redactor.years_of_experience }}</p>
+        <p><strong>Is staff:</strong> <span class="badge {{ redactor.is_staff|yesno:'badge-success,badge-secondary' }}">{{ redactor.is_staff|yesno:'Yes,No' }}</span></p>
+      </div>
+    </div>
+    {% if user == redactor %}
+      <div class="mt-4">
+        <a href="{% url 'board:redactor-delete' redactor.pk %}" class="btn btn-danger">Delete My Account</a>
+        <a href="{% url 'board:redactor-update' redactor.pk %}" class="btn btn-primary">Update My Account</a>
+      </div>
+    {% endif %}
+    <div class="mt-4">
+      <h4>Newspapers</h4>
+      {% if redactor.newspapers.all %}
+        {% for newspaper in redactor.newspapers.all %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <p><strong>Title:</strong> {{ newspaper.title }}</p>
+              <p><strong>Content:</strong> {{ newspaper.content }}</p>
+              <p><strong>Topics:</strong>
+                {% for topic in newspaper.topic.all %}
+                  {{ topic.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="alert alert-warning">No newspapers!</p>
+      {% endif %}
+    </div>
   </div>
 {% endblock %}

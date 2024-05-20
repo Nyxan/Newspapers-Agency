@@ -2,7 +2,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 
-from accounts.managers import CustomUserManager
 from accounts.validators import validate_name, validate_username
 
 
@@ -18,8 +17,6 @@ class Redactor(AbstractUser):
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "first_name", "last_name"]
-
-    objects = CustomUserManager()
 
     def get_absolute_url(self):
         return reverse("board:redactor-detail", kwargs={"pk": self.pk})

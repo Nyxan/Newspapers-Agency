@@ -1,11 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from board.models import Redactor, Newspaper, Topic
+from accounts.models import Redactor
+from board.models import Newspaper, Topic
+
 
 
 @admin.register(Redactor)
-class DriverAdmin(UserAdmin):
+class RedactorAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("years_of_experience",)
     fieldsets = UserAdmin.fieldsets + (
         (("Additional info", {"fields": ("years_of_experience",)}),)
@@ -27,9 +29,11 @@ class DriverAdmin(UserAdmin):
 
 
 @admin.register(Newspaper)
-class CarAdmin(admin.ModelAdmin):
+class NewspaperAdmin(admin.ModelAdmin):
     search_fields = ("title",)
-    list_filter = ("topic",)
+    list_filter = ("topic__name",)
+    list_display = ("title",)
 
-
-admin.site.register(Topic)
+@admin.register(Topic)
+class TopicAdmin(admin.ModelAdmin):
+    list_display = ("name",)

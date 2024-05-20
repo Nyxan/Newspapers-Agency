@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1 class="display-4">Newspapers Agency Home</h1>
+            <h2 class="my-4">Dynamic content</h2>
+            <p class="lead">The Newspapers Agency has:</p>
+            <ul class="list-group mb-4">
+                <li class="list-group-item">
+                    <strong>Newspapers:</strong> {{ num_newspapers }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Redactors:</strong> {{ num_redactors }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Topics:</strong> {{ num_topics }}
+                </li>
+            </ul>
+            <p class="lead">
+                You have visited this page
+                {{ num_visits }} time{{ num_visits|pluralize }}.
+            </p>
+            
+            {% for topic in topics %}
+                <div class="mt-4">
+                    <h3>{{ topic.name }}</h3>
+                    <div class="row">
+                        {% for newspaper in topic.newspapers.all|slice:"0:6" %}
+                            <div class="col-md-2">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ newspaper.title }}</h5>
+                                        <p class="card-text">{{ newspaper.content|truncatechars:50 }}</p>
+                                        <a href="{% url 'board:newspaper-detail' pk=newspaper.id %}" class="btn btn-primary">Read more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

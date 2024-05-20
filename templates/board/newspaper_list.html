@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="mt-5 mb-4">Newspapers</h1>
+        <a href="{% url 'board:create-newspaper' %}" class="btn btn-primary">Create Newspaper</a>
+    </div>
+
+  {% if newspapers %}
+    {% include "includes/search_form.html" %}
+    <br>
+    <div class="row">
+      {% for newspaper in newspapers %}
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{% url 'board:newspaper-detail' pk=newspaper.id %}">{{ newspaper.title }}</a>
+            </h5>
+            {% if newspaper.topic.all %}
+            <p class="card-text"><small class="text-muted">Topic: {{ newspaper.topic.all|join:", " }}</small></p>
+            {% endif %}
+            <p class="card-text"><small class="text-muted">Redactor: {{ newspaper.redactor.all|join:", " }}</small></p>
+            <p class="card-text">{{ newspaper.content }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-info" role="alert">
+      There are no newspapers on board.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

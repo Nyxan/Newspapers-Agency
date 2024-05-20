@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ topic.name }}</h1>
+  {% if newspapers %}
+    <table class="table">
+      <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Publisher Date</th>
+      </tr>
+      {% for newspaper in newspapers %}
+        <tr>
+          <td>{{ newspaper.title }}</td>
+          <td>{{ newspaper.content }}</td>
+          <td>{{ newspaper.publisher_date }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No newspapers found for this topic.</p>
+  {% endif %}
+{% endblock %}

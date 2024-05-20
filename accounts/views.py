@@ -1,20 +1,18 @@
 from allauth.account.views import LoginView, SignupView, PasswordResetView, PasswordChangeView
-from accounts.forms import RedactorSignupForm, RedactorLoginForm, RedactorResetPasswordForm, RedactorChangePasswordForm
+from accounts.forms import *
 
 
 class CustomLoginView(LoginView):
-    form_class = RedactorLoginForm
-    template_name = 'account/login.html'
+    form_class = CustomLoginForm
 
 
 class CustomSignupView(SignupView):
-    form_class = RedactorSignupForm
-    template_name = 'account/signup.html'
+    form_class = CustomSignupForm
 
 
 class CustomPasswordResetView(PasswordResetView):
-    form_class = RedactorResetPasswordForm
+    form_class = CustomResetPasswordForm
 
 
 class CustomPasswordChangeView(PasswordChangeView):
-    form_class = RedactorChangePasswordForm
+    form_class = CustomChangePasswordForm

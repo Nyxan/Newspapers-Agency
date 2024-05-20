@@ -1,35 +1,42 @@
-<ul class="navbar-nav mr-auto">
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'board:index' %}"><i class="bi bi-house-door"></i> Home</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'board:redactor-list' %}"><i class="bi bi-people"></i> All redactors</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'board:newspaper-list' %}"><i class="bi bi-newspaper"></i> All newspapers</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'board:topic-list' %}"><i class="bi bi-tags"></i> All topics</a>
-    </li>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="{% url 'board:index' %}">Newspapers Agency</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-<ul class="navbar-nav ml-auto">
-    {% if user.is_authenticated %}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ user.get_absolute_url }}"><i class="bi bi-person-circle"></i> {{ user.username }}</a>
-        </li>
-        <li class="nav-item">
-            <form method="post" action="{% url 'account_logout' %}" class="form-inline my-2 my-lg-0">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-outline-secondary my-2 my-sm-0">Logout</button>
-            </form>
-        </li>
-    {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'account_signup' %}?next={{ request.path }}"><i class="bi bi-person-plus"></i> Register</a>
-        </li>
-    {% endif %}
-</ul>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'board:redactor-list' %}"><i class="bi bi-people"></i> All redactors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'board:newspaper-list' %}"><i class="bi bi-newspaper"></i> All newspapers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'board:topic-list' %}"><i class="bi bi-tags"></i> All topics</a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ user.get_absolute_url }}"><i class="bi bi-person-circle"></i> User: {{ user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">Logout</button>
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_login' %}?next={{ request.path }}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_signup' %}?next={{ request.path }}"><i class="bi bi-person-plus"></i> Register</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

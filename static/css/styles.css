@@ -1,3 +1,97 @@
 body {
-    margin-top: 20px;
+    font-family: Arial, sans-serif; /* Choose an appropriate font */
+    background-color: #f8f9fa; /* Light background color */
+    padding-top: 70px;
+}
+
+.pagination-container {
+    margin-top: 20px; /* Adjust as needed */
+}
+
+@media (min-width: 768px) {
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 56px); /* Adjust 56px according to the height of your topbar */
+    /* 56px is assumed to be the height of your topbar, adjust this value if it's different */
+    /* 56px + footer height */
+    margin-bottom: -56px; /* Adjust the same value as above */
+}
+
+.footer {
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    background-color: #343a40; /* Dark footer background color */
+    color: #fff; /* Footer text color */
+    padding: 20px 0;
+}
+
+/* Improve card design */
+.card {
+    border: 1px solid #ddd; /* Add a border for better separation */
+    border-radius: 8px; /* Rounded corners */
+    transition: box-shadow 0.3s ease; /* Smooth transition on hover */
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on hover */
+}
+
+.card-title a {
+    color: #007bff; /* Link color */
+    text-decoration: none;
+}
+
+.card-title a:hover {
+    text-decoration: underline; /* Underline link on hover */
+}
+
+.card-text {
+    color: #555; /* Text color */
+}
+
+/* Style buttons */
+.btn {
+    border-radius: 20px; /* Rounded button corners */
+    transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.btn-success {
+    background-color: #28a745; /* Success button color */
+    border-color: #28a745; /* Success button border color */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Darker color on hover */
+    border-color: #218838;
+}
+
+.btn-info {
+    background-color: #17a2b8; /* Info button color */
+    border-color: #17a2b8; /* Info button border color */
+}
+
+.btn-info:hover {
+    background-color: #138496; /* Darker color on hover */
+    border-color: #138496;
+}
+
+/* Optionally, you can add a smooth transition effect for the topbar */
+.navbar.fixed-top {
+    transition: top 0.3s;
+}
+
+/* Add a shadow or any other styling to make the topbar visually distinct */
+.navbar.fixed-top {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.standard-link {
+    color: inherit; /* This will inherit the color from its parent element */
+    text-decoration: none; /* Optional: Removes the underline */
 }
