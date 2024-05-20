@@ -5,15 +5,17 @@ from django import forms
 
 
 class CustomSignupForm(SignupForm):
+    username = forms.CharField(min_length=3, max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)
     years_of_experience = forms.IntegerField()
 
     def save(self, request):
         user = super(CustomSignupForm, self).save(request)
+        user.username = self.cleaned_data['username']
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.redactor.years_of_experience = self.cleaned_data['years_of_experience']
+        user.years_of_experience = self.cleaned_data['years_of_experience']
         user.save()
         return user
 
@@ -44,10 +46,3 @@ class CustomChangePasswordForm(ChangePasswordForm):
         super(CustomChangePasswordForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('change_password', 'Change Password'))
-
-
-class CustomSetPasswordForm(SetPasswordForm):
-    def __init__(self, *args, **kwargs):
-        super(CustomSetPasswordForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.add_input(Submit('set_password', 'Set Password'))
