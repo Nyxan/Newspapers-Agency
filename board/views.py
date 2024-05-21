@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -196,3 +197,49 @@ def add_comment(request, newspaper_id):
         return redirect('board:newspaper-detail', pk=newspaper_id)
     else:
         return redirect('board:index')
+
+
+def newspaper_search(request):
+    query = request.GET.get('q', '')
+    if query:
+        terms = query.split(',')
+        include_topics = []
+        exclude_topics = []
+        include_redactors = []
+        exclude_redactors = []
+
+        for term in terms:
+            term = term.strip()
+            if term.startswith('-'):
+                if ' ' in term:
+                    exclude_redactors.append(term[1:])
+                else:
+                    exclude_topics.append(term[1:])
+            else:
+                if ' ' in term:
+                    include_redactors.append(term)
+                else:
+                    include_topics.append(term)
+
+        include_topic_queries = Q()
+        for topic in include_topics:
+            include_topic_queries |= Q(topic__name__icontains=topic)
+
+        exclude_topic_queries = Q()
+        for topic in exclude_topics:
+            exclude_topic_queries |= Q(topic__name__icontains=topic)
+
+        include_redactor_queries = Q()
+        for redactor in include_redactors:
+            include_redactor_queries |= Q(redactor__username__icontains=redactor)
+
+        exclude_redactor_queries = Q()
+        for redactor in exclude_redactors:
+            exclude_redactor_queries |= Q(redactor__username__icontains=redactor)
+
+        newspapers = Newspaper.objects.filter(include_topic_queries, include_redactor_queries).exclude(
+            exclude_topic_queries).exclude(exclude_redactor_queries).distinct()
+    else:
+        newspapers = Newspaper.objects.none()
+
+    return render(request, 'board/newspaper_search.html', {'newspapers': newspapers, 'query': query})
