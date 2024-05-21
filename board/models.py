@@ -18,6 +18,8 @@ class Newspaper(models.Model):
         Topic, related_name="newspapers"
     )
     redactor = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="newspapers")
+    image = models.ImageField(upload_to="newspapers", blank=True, null=True)
+
 
     def __str__(self):
         return f"{self.title} {self.publisher_date}"

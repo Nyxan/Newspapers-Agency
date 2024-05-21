@@ -74,6 +74,7 @@ class RedactorDetailView(LoginRequiredMixin, generic.DetailView):
         context['newspapers'] = newspapers
         return context
 
+
 class RedactorCreateView(LoginRequiredMixin, generic.CreateView):
     model = Redactor
     form_class = RedactorCreationForm
@@ -239,6 +240,11 @@ def newspaper_search(request):
 
         newspapers = Newspaper.objects.filter(include_topic_queries, include_redactor_queries).exclude(
             exclude_topic_queries).exclude(exclude_redactor_queries).distinct()
+
+        if include_redactors:
+            newspapers = newspapers.filter(redactor__username__in=include_redactors).distinct()
+        if exclude_redactors:
+            newspapers = newspapers.exclude(redactor__username__in=exclude_redactors).distinct()
     else:
         newspapers = Newspaper.objects.none()
 

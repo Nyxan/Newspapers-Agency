@@ -4,16 +4,24 @@
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-8 offset-md-2">
-        <div class="card">
+        <div class="card mb-3">
           <div class="card-body">
-            <h1 class="card-title">{{ newspaper.title }}</h1>
-
+            {% if newspaper.image %}
+              <div class="mb-3" style="background-image: url('{{ newspaper.image.url }}'); background-size: cover; background-position: center; height: 300px; position: relative;">
+                <div style="background: rgba(0, 0, 0, 0.5); color: white; height: 100%; display: flex; align-items: center; justify-content: center;">
+                  <h1 class="card-title">{{ newspaper.title }}</h1>
+                </div>
+              </div>
+              {% else %}
+              <h1 class="card-title">{{ newspaper.title }}</h1>
+            {% endif %}
             <div class="mb-3">
               <h5>Topics:</h5>
               <div class="d-flex flex-wrap">
                 {% for topic in newspaper.topic.all %}
-                  <span class="badge badge-info mr-2 mb-2"><a class="standard-link"
-                                                              href="{% url 'board:topic-detail' pk=topic.id %}">{{ topic.name }}</a></span>
+                  <span class="badge badge-info mr-2 mb-2">
+                    <a class="standard-link" style="color: #343a40; background: antiquewhite" href="{% url 'board:topic-detail' pk=topic.id %}">{{ topic.name }}</a>
+                  </span>
                 {% endfor %}
               </div>
             </div>
@@ -21,78 +29,54 @@
               <h5>Redactors:</h5>
               <div class="d-flex flex-wrap">
                 {% for redactor in newspaper.redactor.all %}
-                  <span class="badge badge-secondary mr-2 mb-2"><a class="standard-link"
-                                                                   href="{% url 'board:redactor-detail' pk=redactor.id %}">{{ redactor.username }}</a></span>
+                  <span class="badge badge-secondary mr-2 mb-2">
+                    <a class="standard-link" style="color: #343a40; background: antiquewhite" href="{% url 'board:redactor-detail' pk=redactor.id %}">{{ redactor.username }}</a>
+                  </span>
                 {% endfor %}
-
-
               </div>
-
             </div>
-
+            <div class="mb-3">
+              <p class="card-text">{{ newspaper.content }}</p>
+            </div>
+            {% if user.is_staff %}
+              <div class="mt-4">
+                <a href="{% url 'board:newspaper-delete' newspaper.pk %}" class="btn btn-danger">Delete newspaper</a>
+                <a href="{% url 'board:newspaper-update' newspaper.pk %}" class="btn btn-primary">Update newspaper</a>
+              </div>
+            {% endif %}
           </div>
-
         </div>
-        {% if user.is_staff %}
-          <div class="mt-4">
-            <a href="{% url 'board:newspaper-delete' newspaper.pk %}" class="btn btn-danger">Delete newspaper</a>
-            <a href="{% url 'board:newspaper-update' newspaper.pk %}" class="btn btn-primary">Update newspaper</a>
-          </div>
-        {% endif %}
 
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="container mt-3">
-    <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <div class="card">
+        <div class="card mt-3">
           <div class="card-body">
-            <p class="card-text">{{ newspaper.content }}</p>
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-8 offset-md-2">
-
-        <h3 class="card-title">Comments</h3>
-
-        <div class="card-body">
-          <ul class="list-group">
-            {% for comment in newspaper.comments.all %}
-              <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <strong>{{ comment.redactor.username }}</strong> - {{ comment.created_at|date:"F d, Y H:i" }}
+            <h3 class="card-title">Comments</h3>
+            <ul class="list-group mb-3">
+              {% for comment in newspaper.comments.all %}
+                <li class="list-group-item">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>{{ comment.redactor.username }}</strong> - {{ comment.created_at|date:"F d, Y H:i" }}
+                    </div>
+                    <div class="text-muted">{{ comment.created_at|timesince }} ago</div>
                   </div>
-                  <div class="text-muted">{{ comment.created_at|timesince }} ago</div>
-                </div>
-                <p>{{ comment.content }}</p>
-              </li>
-            {% empty %}
-              <li class="list-group-item">No comments yet.</li>
-            {% endfor %}
-          </ul>
-          <hr>
-          <h3>Add a Comment</h3>
-          <form method="post" action="{% url 'board:add-comment' newspaper.id %}">
-            {% csrf_token %}
-            <div class="form-group">
-              <label for="comment_content">Your Comment</label>
-              <textarea class="form-control" id="comment_content" name="content" rows="3" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+                  <p>{{ comment.content }}</p>
+                </li>
+              {% empty %}
+                <li class="list-group-item">No comments yet.</li>
+              {% endfor %}
+            </ul>
+            <hr>
+            <h3>Add a Comment</h3>
+            <form method="post" action="{% url 'board:add-comment' newspaper.id %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="comment_content">Your Comment</label>
+                <textarea class="form-control" id="comment_content" name="content" rows="3" required></textarea>
+              </div>
+              <br>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
