@@ -20,6 +20,7 @@ class RedactorAdmin(UserAdmin):
                         "first_name",
                         "last_name",
                         "years_of_experience",
+                        "email"
                     )
                 },
             ),
