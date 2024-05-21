@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-b!yva1-+idr_a*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False) == "True"
 
-ALLOWED_HOSTS = ["newspapers-agency-fbbi.onrender.com"]
+ALLOWED_HOSTS = ["newspapers-agency-fbbi.onrender.com", "127.0.0.1",]
 
 # Application definition
 
@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     "board",
     "accounts"
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1",
 ]
 
 MIDDLEWARE = [
