@@ -14,7 +14,7 @@ class RedactorModelTest(TestCase):
             first_name="john",
             last_name="doe",
             years_of_experience=5,
-            email_verified=True
+            email_verified=True,
         )
 
     def test_redactor_creation(self):
@@ -22,7 +22,7 @@ class RedactorModelTest(TestCase):
         self.assertEqual(self.redactor.email, "testuser@example.com")
         self.assertTrue(self.redactor.check_password("testpassword123"))
         self.assertEqual(self.redactor.first_name, "John")  # capitalized
-        self.assertEqual(self.redactor.last_name, "Doe")    # capitalized
+        self.assertEqual(self.redactor.last_name, "Doe")  # capitalized
         self.assertEqual(self.redactor.years_of_experience, 5)
         self.assertTrue(self.redactor.email_verified)
 
@@ -57,7 +57,7 @@ class RedactorModelTest(TestCase):
             Redactor.objects.create_user(
                 username="testuser",
                 email="anotheremail@example.com",
-                password="anotherpassword"
+                password="anotherpassword",
             )
 
     def test_email_field_unique(self):
@@ -65,5 +65,5 @@ class RedactorModelTest(TestCase):
             Redactor.objects.create_user(
                 username="anotheruser",
                 email="testuser@example.com",
-                password="anotherpassword"
+                password="anotherpassword",
             )

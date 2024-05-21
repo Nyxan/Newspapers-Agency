@@ -19,13 +19,17 @@ from board.views import (
     NewspaperUpdateView,
     NewspaperDeleteView,
     TopicUpdateView,
-    TopicDeleteView, newspaper_search,
+    TopicDeleteView,
+    newspaper_search,
 )
 
 urlpatterns = [
     path("", index, name="index"),
     path("redactors/", RedactorListView.as_view(), name="redactor-list"),
-    path("redactors/<int:pk>/", RedactorDetailView.as_view(), name="redactor-detail"),
+    path(
+        "redactors/<int:pk>/",
+        RedactorDetailView.as_view(),
+        name="redactor-detail"),
     path(
         "redactor/<int:pk>/update/",
         RedactorUpdate.as_view(),
@@ -47,7 +51,8 @@ urlpatterns = [
     path(
         "newspapers/create/",
         NewspaperCreateView.as_view(),
-        name="newspaper-create"),
+        name="newspaper-create"
+    ),
     path(
         "newspaper/<int:pk>/update/",
         NewspaperUpdateView.as_view(),
@@ -71,7 +76,11 @@ urlpatterns = [
         TopicDeleteView.as_view(),
         name="topic-delete",
     ),
-    path("newspaper/<int:newspaper_id>/add_comment/", add_comment, name="add-comment"),
-    path('search/', newspaper_search, name='newspaper-search'),
+    path(
+        "newspaper/<int:newspaper_id>/add_comment/",
+        add_comment,
+        name="add-comment"
+    ),
+    path("search/", newspaper_search, name="newspaper-search"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 app_name = "board"

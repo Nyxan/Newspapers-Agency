@@ -17,9 +17,11 @@
           <div class="list-group-item list-group-item-action d-flex align-items-center mb-3">
             <div class="me-3">
               {% if redactor.profile_image %}
-                <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+                <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid rounded-circle"
+                     style="width: 100px; height: 100px; object-fit: cover;">
               {% else %}
-                <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center" style="width: 100px; height: 100px; object-fit: cover;">
+                <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center"
+                     style="width: 100px; height: 100px; object-fit: cover;">
                   <span class="text-white">No Image</span>
                 </div>
               {% endif %}

@@ -7,12 +7,14 @@
         <div class="card mb-3">
           <div class="card-body">
             {% if newspaper.image %}
-              <div class="mb-3" style="background-image: url('{{ newspaper.image.url }}'); background-size: cover; background-position: center; height: 300px; position: relative;">
-                <div style="background: rgba(0, 0, 0, 0.5); color: white; height: 100%; display: flex; align-items: center; justify-content: center;">
+              <div class="mb-3"
+                   style="background-image: url('{{ newspaper.image.url }}'); background-size: cover; background-position: center; height: 300px; position: relative;">
+                <div
+                    style="background: rgba(0, 0, 0, 0.5); color: white; height: 100%; display: flex; align-items: center; justify-content: center;">
                   <h1 class="card-title">{{ newspaper.title }}</h1>
                 </div>
               </div>
-              {% else %}
+            {% else %}
               <h1 class="card-title">{{ newspaper.title }}</h1>
             {% endif %}
             <div class="mb-3">
@@ -20,7 +22,8 @@
               <div class="d-flex flex-wrap">
                 {% for topic in newspaper.topic.all %}
                   <span class="badge badge-info mr-2 mb-2">
-                    <a class="standard-link" style="color: #343a40; background: antiquewhite" href="{% url 'board:topic-detail' pk=topic.id %}">{{ topic.name }}</a>
+                    <a class="standard-link" style="color: #343a40; background: antiquewhite"
+                       href="{% url 'board:topic-detail' pk=topic.id %}">{{ topic.name }}</a>
                   </span>
                 {% endfor %}
               </div>
@@ -30,7 +33,8 @@
               <div class="d-flex flex-wrap">
                 {% for redactor in newspaper.redactor.all %}
                   <span class="badge badge-secondary mr-2 mb-2">
-                    <a class="standard-link" style="color: #343a40; background: antiquewhite" href="{% url 'board:redactor-detail' pk=redactor.id %}">{{ redactor.username }}</a>
+                    <a class="standard-link" style="color: #343a40; background: antiquewhite"
+                       href="{% url 'board:redactor-detail' pk=redactor.id %}">{{ redactor.username }}</a>
                   </span>
                 {% endfor %}
               </div>
