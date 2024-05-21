@@ -22,10 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "django-insecure-b!yva1-+idr_a*&^9=n8v1=%7xbpukp$53k^)3r$^n6vt$&rm5")
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", False) == "True"
+DEBUG = config("DEBUG", cast=bool, default=False)
+
+CSRF_TRUSTED_ORIGINS = ["https://newspapers-agency-fbbi.onrender.com"]
 
 ALLOWED_HOSTS = ["newspapers-agency-fbbi.onrender.com", "127.0.0.1",]
 
@@ -54,6 +56,7 @@ INTERNAL_IPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
