@@ -12,8 +12,8 @@ class Redactor(AbstractUser):
         max_length=30, unique=True, validators=[validate_username]
     )
     email = models.EmailField(unique=True, max_length=255)
-    first_name = models.CharField(max_length=50, validators=[validate_name])
-    last_name = models.CharField(max_length=50, validators=[validate_name])
+    first_name = models.CharField(max_length=30, validators=[validate_name])
+    last_name = models.CharField(max_length=30, validators=[validate_name])
     profile_image = models.ImageField(
         upload_to="profile_images/", blank=True, null=True
     )
