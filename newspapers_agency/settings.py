@@ -29,7 +29,7 @@ DEBUG = config("DEBUG", cast=bool, default=False)
 
 CSRF_TRUSTED_ORIGINS = ["https://newspapers-agency-fbbi.onrender.com"]
 
-ALLOWED_HOSTS = ["newspapers-agency-fbbi.onrender.com", "127.0.0.1",]
+ALLOWED_HOSTS = ["newspapers-agency-fbbi.onrender.com", "127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -182,9 +182,9 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
 SITE_ID = 1
 
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
 
 ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
 ACCOUNT_FORMS = {
@@ -194,3 +194,4 @@ ACCOUNT_FORMS = {
     'change_password': 'accounts.forms.CustomChangePasswordForm',
     'set_password': 'accounts.forms.CustomSetPasswordForm',
 }
+

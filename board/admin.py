@@ -9,7 +9,7 @@ from board.models import Newspaper, Topic
 class RedactorAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ("years_of_experience",)
     fieldsets = UserAdmin.fieldsets + (
-        (("Additional info", {"fields": ("years_of_experience",)}),)
+        (("Additional info", {"fields": ("years_of_experience", "email_verified",)}),)
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
@@ -20,7 +20,8 @@ class RedactorAdmin(UserAdmin):
                         "first_name",
                         "last_name",
                         "years_of_experience",
-                        "email"
+                        "email",
+                        "email_verified"
                     )
                 },
             ),
