@@ -5,5 +5,4 @@ media
 accounts/migrations
 board/migrations
 .env
-db.sqlite3
 README.md

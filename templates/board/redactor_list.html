@@ -12,41 +12,29 @@
     {% if redactors %}
       {% include "includes/search_form.html" %}
       <br>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Image</th>
-            <th>Username</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Years of Experience</th>
-          </tr>
-          </thead>
-          <tbody>
-          {% for redactor in redactors %}
-            <tr>
-              <td>
-                <div class="col-md-3">
-                  {% if redactor.profile_image %}
-                    <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid mb-3">
-                  {% else %}
-                    <div class="col-md-3">Empty image</div>
-                  {% endif %}
+      <div class="list-group">
+        {% for redactor in redactors %}
+          <div class="list-group-item list-group-item-action d-flex align-items-center mb-3">
+            <div class="me-3">
+              {% if redactor.profile_image %}
+                <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid rounded-circle" style="width: 100px; height: 100px; object-fit: cover;">
+              {% else %}
+                <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center" style="width: 100px; height: 100px; object-fit: cover;">
+                  <span class="text-white">No Image</span>
                 </div>
-              </td>
-              <td>
+              {% endif %}
+            </div>
+            <div>
+              <h5 class="mb-1">
                 <a href="{{ redactor.get_absolute_url }}">
                   {{ redactor.username }} {% if user == redactor %} (Me){% endif %}
                 </a>
-              </td>
-              <td>{{ redactor.first_name }}</td>
-              <td>{{ redactor.last_name }}</td>
-              <td>{{ redactor.years_of_experience }}</td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
+              </h5>
+              <p class="mb-1">{{ redactor.first_name }} {{ redactor.last_name }}</p>
+              <p class="mb-0">Years of Experience: {{ redactor.years_of_experience }}</p>
+            </div>
+          </div>
+        {% endfor %}
       </div>
     {% else %}
       <p class="mt-3">There are no redactors in the service.</p>

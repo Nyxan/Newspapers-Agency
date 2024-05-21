@@ -81,17 +81,15 @@ body {
     border-color: #138496;
 }
 
-/* Optionally, you can add a smooth transition effect for the topbar */
 .navbar.fixed-top {
     transition: top 0.3s;
 }
 
-/* Add a shadow or any other styling to make the topbar visually distinct */
 .navbar.fixed-top {
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .standard-link {
-    color: inherit; /* This will inherit the color from its parent element */
-    text-decoration: none; /* Optional: Removes the underline */
+    color: inherit;
+    text-decoration: none;
 }

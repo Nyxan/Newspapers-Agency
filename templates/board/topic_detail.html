@@ -11,7 +11,8 @@
       </tr>
       {% for newspaper in newspapers %}
         <tr>
-          <td>{{ newspaper.title }}</td>
+                          
+          <td><a href="{% url 'board:newspaper-detail' pk=newspaper.id %}" class="text-decoration-none text-dark">{{ newspaper.title }}</a></td>
           <td>{{ newspaper.content }}</td>
           <td>{{ newspaper.publisher_date }}</td>
         </tr>
