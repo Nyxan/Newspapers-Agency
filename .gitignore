@@ -4,5 +4,6 @@
 media
 accounts/migrations
 board/migrations
+db.sqlite3
 .env
 README.md
