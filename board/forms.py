@@ -14,6 +14,7 @@ class RedactorCreationForm(UserCreationForm):
             "email",
             "first_name",
             "last_name",
+            "profile_image"
         )
 
 

@@ -4,6 +4,8 @@ from allauth.account.views import (
     PasswordResetView,
     PasswordChangeView,
 )
+from django.urls import reverse_lazy
+
 from accounts.forms import *
 
 

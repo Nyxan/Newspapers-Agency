@@ -172,7 +172,7 @@ class NewspapersListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class NewspaperCreateView(generic.CreateView):
+class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
     model = Newspaper
     form_class = NewspaperForm
     template_name = "board/newspaper_form.html"
@@ -211,6 +211,7 @@ def add_comment(request, newspaper_id):
         return redirect("board:index")
 
 
+@login_required
 def newspaper_search(request):
     query = request.GET.get("q", "")
     if query:

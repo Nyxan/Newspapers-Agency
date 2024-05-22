@@ -1,11 +1,11 @@
 body {
-    font-family: Arial, sans-serif; /* Choose an appropriate font */
-    background-color: #f8f9fa; /* Light background color */
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
     padding-top: 70px;
 }
 
 .pagination-container {
-    margin-top: 20px; /* Adjust as needed */
+    margin-top: 20px;
 }
 
 @media (min-width: 768px) {
@@ -16,68 +16,66 @@ body {
 }
 
 .content-wrapper {
-    min-height: calc(100vh - 56px); /* Adjust 56px according to the height of your topbar */
-    /* 56px is assumed to be the height of your topbar, adjust this value if it's different */
-    /* 56px + footer height */
-    margin-bottom: -56px; /* Adjust the same value as above */
+    min-height: calc(100vh - 56px);
+    margin-bottom: -56px;
 }
 
 .footer {
     width: 100%;
     position: relative;
     bottom: 0;
-    background-color: #343a40; /* Dark footer background color */
-    color: #fff; /* Footer text color */
+    background-color: #343a40;
+    color: #fff;
     padding: 20px 0;
 }
 
 /* Improve card design */
 .card {
-    border: 1px solid #ddd; /* Add a border for better separation */
-    border-radius: 8px; /* Rounded corners */
-    transition: box-shadow 0.3s ease; /* Smooth transition on hover */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .card-title a {
-    color: #007bff; /* Link color */
+    color: #007bff;
     text-decoration: none;
 }
 
 .card-title a:hover {
-    text-decoration: underline; /* Underline link on hover */
+    text-decoration: underline;
 }
 
 .card-text {
-    color: #555; /* Text color */
+    color: #555;
 }
 
 /* Style buttons */
 .btn {
-    border-radius: 20px; /* Rounded button corners */
-    transition: background-color 0.3s ease; /* Smooth transition on hover */
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
 }
 
 .btn-success {
-    background-color: #28a745; /* Success button color */
-    border-color: #28a745; /* Success button border color */
+    background-color: #28a745;
+    border-color: #28a745;
 }
 
 .btn-success:hover {
-    background-color: #218838; /* Darker color on hover */
+    background-color: #218838;
     border-color: #218838;
 }
 
 .btn-info {
-    background-color: #17a2b8; /* Info button color */
-    border-color: #17a2b8; /* Info button border color */
+    background-color: #17a2b8;
+    border-color: #17a2b8;
 }
 
 .btn-info:hover {
-    background-color: #138496; /* Darker color on hover */
+    background-color: #138496;
     border-color: #138496;
 }
 
@@ -93,3 +91,4 @@ body {
     color: inherit;
     text-decoration: none;
 }
+

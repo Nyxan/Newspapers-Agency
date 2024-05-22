@@ -18,8 +18,8 @@ class Redactor(AbstractUser):
         upload_to="profile_images/", blank=True, null=True
     )
 
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["username", "first_name", "last_name"]
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email", "first_name", "last_name"]
 
     def get_absolute_url(self):
         return reverse("board:redactor-detail", kwargs={"pk": self.pk})
