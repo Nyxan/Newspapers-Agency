@@ -207,8 +207,8 @@ def add_comment(request, newspaper_id):
             redactor=redactor
         )
         return redirect("board:newspaper-detail", pk=newspaper_id)
-    else:
-        return redirect("board:index")
+
+    return redirect("board:index")
 
 
 @login_required
@@ -219,14 +219,11 @@ def newspaper_search(request):
         include_topics = []
         exclude_topics = []
         include_redactors = []
-        exclude_redactors = []
 
         for term in terms:
             term = term.strip()
             if term.startswith("-"):
                 if " " in term:
-                    exclude_redactors.append(term[1:])
-                else:
                     exclude_topics.append(term[1:])
             else:
                 if " " in term:
@@ -242,36 +239,13 @@ def newspaper_search(request):
         for topic in exclude_topics:
             exclude_topic_queries |= Q(topic__name__icontains=topic)
 
-        include_redactor_queries = Q()
-        for redactor in include_redactors:
-            include_redactor_queries |= Q(
-                redactor__username__icontains=redactor
-            )
-
-        exclude_redactor_queries = Q()
-        for redactor in exclude_redactors:
-            exclude_redactor_queries |= Q(
-                redactor__username__icontains=redactor
-            )
-
         newspapers = (
             Newspaper.objects.filter(
                 include_topic_queries,
-                include_redactor_queries
             )
             .exclude(exclude_topic_queries)
-            .exclude(exclude_redactor_queries)
             .distinct()
         )
-
-        if include_redactors:
-            newspapers = newspapers.filter(
-                redactor__username__in=include_redactors
-            ).distinct()
-        if exclude_redactors:
-            newspapers = newspapers.exclude(
-                redactor__username__in=exclude_redactors
-            ).distinct()
     else:
         newspapers = Newspaper.objects.none()
 

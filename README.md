@@ -1,7 +1,5 @@
 ﻿# Newspapers-Agency
 
-> Additional information
-
 Django project for posting news, managing redactors and news
 
 [Newspapers Agency deployed to render](https://newspapers-agency-fbbi.onrender.com/)
@@ -14,8 +12,8 @@ Python3 must be already installed
 git clone https://github.com/Nyxan/Newspapers-Agency
 cd Newspapers-Agency
 python3 -m venv venv
-source venv/bin/activate
-pip install requirements.txt
+source venv/scripts/activate
+pip install -r requirements.txt
 python manage.py runserver
 ```
 
@@ -33,4 +31,3 @@ change ACCOUNT_EMAIL_VERIFICATION='none' on ACCOUNT_EMAIL_VERIFICATION='mandator
 * Powerful admin panel for advanced managing
 
 Project in develop
-

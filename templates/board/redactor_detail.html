@@ -2,86 +2,87 @@
 
 {% block content %}
   <div class="container mt-5">
-  <div class="card">
-    <div class="card-header">
-      <h1>Username: {{ redactor.username }}</h1>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-3">
-          {% if redactor.profile_image %}
-            <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid mb-3">
+    <div class="card">
+      <div class="card-header">
+        <h1>Username: {{ redactor.username }}</h1>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            {% if redactor.profile_image %}
+              <img src="{{ redactor.profile_image.url }}" alt="Profile Image" class="img-fluid mb-3">
+            {% else %}
+              <div>Empty image</div>
+            {% endif %}
+          </div>
+          <div class="col-md-9">
+            <p><strong>First name:</strong> {{ redactor.first_name }}</p>
+            <p><strong>Last name:</strong> {{ redactor.last_name }}</p>
+            <p><strong>Email:</strong> {{ redactor.email }}</p>
+            <p><strong>Years of experience:</strong> {{ redactor.years_of_experience }}</p>
+            <p><strong>Is staff:</strong> <span style="color: black; background: #28a745"
+                                                class="badge  {{ redactor.is_staff|yesno:'badge-success,badge-secondary' }}">{{ redactor.is_staff|yesno:'Yes,No' }}</span>
+            </p>
+          </div>
+        </div>
+        {% if user == redactor %}
+          <div class="mt-4">
+            <a href="{% url 'board:redactor-delete' redactor.pk %}" class="btn btn-danger">Delete My Account</a>
+            <a href="{% url 'board:redactor-update' redactor.pk %}" class="btn btn-primary">Update My Account</a>
+          </div>
+        {% endif %}
+        <div class="mt-4">
+          <h4>Newspapers</h4>
+          {% if newspapers %}
+            {% for newspaper in newspapers %}
+              <div class="card mb-3">
+                <div class="card-body">
+                  <p><strong>Title:</strong> <a
+                      href="{% url 'board:newspaper-detail' newspaper.pk %}">{{ newspaper.title }}</a></p>
+                  <p><strong>Content:</strong> {{ newspaper.content|truncatechars:100 }}</p>
+                  <p><strong>Topics:</strong>
+                    {% for topic in newspaper.topic.all %}
+                      {{ topic.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                  </p>
+                </div>
+              </div>
+            {% endfor %}
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center">
+                {% if newspapers.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ newspapers.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&lsaquo;</span>
+                    </a>
+                  </li>
+                {% endif %}
+                <li class="page-item disabled">
+                  <span class="page-link">Page {{ newspapers.number }} of {{ newspapers.paginator.num_pages }}</span>
+                </li>
+                {% if newspapers.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ newspapers.next_page_number }}" aria-label="Next">
+                      <span aria-hidden="true">&rsaquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ newspapers.paginator.num_pages }}" aria-label="Last">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
           {% else %}
-            <div>Empty image</div>
+            <p class="alert alert-warning">No newspapers!</p>
           {% endif %}
         </div>
-        <div class="col-md-9">
-          <p><strong>First name:</strong> {{ redactor.first_name }}</p>
-          <p><strong>Last name:</strong> {{ redactor.last_name }}</p>
-          <p><strong>Email:</strong> {{ redactor.email }}</p>
-          <p><strong>Years of experience:</strong> {{ redactor.years_of_experience }}</p>
-          <p><strong>Is staff:</strong> <span
-              class="badge {{ redactor.is_staff|yesno:'badge-success,badge-secondary' }}">{{ redactor.is_staff|yesno:'Yes,No' }}</span>
-          </p>
-        </div>
-      </div>
-      {% if user == redactor %}
-        <div class="mt-4">
-          <a href="{% url 'board:redactor-delete' redactor.pk %}" class="btn btn-danger">Delete My Account</a>
-          <a href="{% url 'board:redactor-update' redactor.pk %}" class="btn btn-primary">Update My Account</a>
-        </div>
-      {% endif %}
-      <div class="mt-4">
-        <h4>Newspapers</h4>
-        {% if newspapers %}
-          {% for newspaper in newspapers %}
-            <div class="card mb-3">
-              <div class="card-body">
-                <p><strong>Title:</strong> <a
-                    href="{% url 'board:newspaper-detail' newspaper.pk %}">{{ newspaper.title }}</a></p>
-                <p><strong>Content:</strong> {{ newspaper.content|truncatechars:100 }}</p>
-                <p><strong>Topics:</strong>
-                  {% for topic in newspaper.topic.all %}
-                    {{ topic.name }}{% if not forloop.last %}, {% endif %}
-                  {% endfor %}
-                </p>
-              </div>
-            </div>
-          {% endfor %}
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-              {% if newspapers.has_previous %}
-                <li class="page-item">
-                  <a class="page-link" href="?page=1" aria-label="First">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ newspapers.previous_page_number }}" aria-label="Previous">
-                    <span aria-hidden="true">&lsaquo;</span>
-                  </a>
-                </li>
-              {% endif %}
-              <li class="page-item disabled">
-                <span class="page-link">Page {{ newspapers.number }} of {{ newspapers.paginator.num_pages }}</span>
-              </li>
-              {% if newspapers.has_next %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ newspapers.next_page_number }}" aria-label="Next">
-                    <span aria-hidden="true">&rsaquo;</span>
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ newspapers.paginator.num_pages }}" aria-label="Last">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              {% endif %}
-            </ul>
-          </nav>
-        {% else %}
-          <p class="alert alert-warning">No newspapers!</p>
-        {% endif %}
       </div>
     </div>
   </div>

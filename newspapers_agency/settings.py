@@ -99,17 +99,17 @@ WSGI_APPLICATION = "newspapers_agency.wsgi.application"
 load_dotenv(BASE_DIR / '.env')
 
 DATABASES = {
-  'default': {
-    'ENGINE': 'django.db.backends.postgresql',
-    'NAME': getenv('PGDATABASE'),
-    'USER': getenv('PGUSER'),
-    'PASSWORD': getenv('PGPASSWORD'),
-    'HOST': getenv('PGHOST'),
-    'PORT': getenv('PGPORT', 5432),
-    'OPTIONS': {
-      'sslmode': 'require',
-    },
-  }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': getenv('PGDATABASE'),
+        'USER': getenv('PGUSER'),
+        'PASSWORD': getenv('PGPASSWORD'),
+        'HOST': getenv('PGHOST'),
+        'PORT': getenv('PGPORT', 5432),
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
 
 # Password validation
@@ -194,4 +194,3 @@ ACCOUNT_FORMS = {
     'change_password': 'accounts.forms.CustomChangePasswordForm',
     'set_password': 'accounts.forms.CustomSetPasswordForm',
 }
-
