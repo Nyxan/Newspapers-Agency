@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 from accounts.models import Redactor
 from board.models import Newspaper, Topic
@@ -41,11 +42,16 @@ class NewspaperForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
     )
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["content"].required = False
     class Meta:
         model = Newspaper
         fields = ["title", "content", "topic", "redactor", "image"]
         widgets = {
-            "topic": forms.CheckboxSelectMultiple(),
+            "content": CKEditor5Widget(
+                attrs={"class": "django_ckeditor_5"}, config_name="default"
+            )
         }
 
 

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_filters %}
 {% block content %}
+      {{ form.media }}
   <h1>{{ object|yesno:"Update,Create" }} Newspaper</h1>
   <form action="" method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}

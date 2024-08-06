@@ -29,12 +29,13 @@ class RedactorAdmin(UserAdmin):
     )
 
 
+@admin.register(Newspaper)
 class NewspaperAdmin(admin.ModelAdmin):
     list_display = (
         "title",
         "publisher_date",
     )
-    fields = ("title", "content", "publisher_date", "topic", "redactor", "image")
+    fields = ("title", "content", "topic", "redactor", "image")
     filter_horizontal = ("topic", "redactor")
 
 

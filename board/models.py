@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Topic(models.Model):
@@ -11,7 +12,7 @@ class Topic(models.Model):
 
 class Newspaper(models.Model):
     title = models.CharField(max_length=100)
-    content = models.TextField()
+    content = CKEditor5Field('content', config_name='extends')
     publisher_date = models.DateField(auto_now_add=True)
     topic = models.ManyToManyField(Topic, related_name="newspapers")
     redactor = models.ManyToManyField(
