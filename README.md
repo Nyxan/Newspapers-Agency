@@ -27,7 +27,6 @@ change ACCOUNT_EMAIL_VERIFICATION='none' on ACCOUNT_EMAIL_VERIFICATION='mandator
 * Authentification functionality with email verification(disabled by default)
 * Managing newspapers, redactors & topics
 * Search system for searching by topic
-* If you get really randy, you can even do this
 * Powerful admin panel for advanced managing
 
 Project in develop
